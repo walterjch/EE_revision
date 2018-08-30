@@ -9,9 +9,6 @@ Date        : 30.08.2018
 
 require_once("connect.php");
 
-$username = filter_input(INPUT_POST, "id", FILTER_SANITIZE_STRING);
-$pwd = sha1(filter_input(INPUT_POST, "pwd", FILTER_SANITIZE_STRING));
-
 $error = false;
 $errormsg = "";
 $username = "";
@@ -19,14 +16,24 @@ $pwd = "";
 $logged = false;
 $userCo = "";
 
+$username = filter_input(INPUT_POST, "id", FILTER_SANITIZE_STRING);
+$pwd = sha1(filter_input(INPUT_POST, "pwd", FILTER_SANITIZE_STRING));
+
 //On vérifie que l'utilisateur a clique sur le bouton
 if (filter_has_var(INPUT_POST, "btnOK")) {
 //Est-il déconnecté ? Si oui on lui propose de se déconnecter,
 //Sinon, on lui propose de se connecter
   if (!isset($_SESSION['username'])) {
-    $username = filter_input(INPUT_POST, "username");
-    $pwd = filter_input(INPUT_POST, "password");
-    checkUser($username, $pwd);
+    if (checkUser($username, $pwd) != NULL){
+       $_SESSION['username'] = $username;
+       echo $_SESSION['username']; // ajouter la redirection
+    }
+    else {
+      $error = true;
+      $errormsg = "Oppsie Whoopsie !! Mauvais mot de passe ou identifiant !";
+      $logged = false;
+      $userCo = "";
+    }
   }else {
     disconnect();
   }
@@ -46,8 +53,8 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
         <label>Identifiant : </br><input type="text" name="id"/></label></br>
         <label>Mot de passe : </br><input type="password" name="pwd"/></label></br>
         <input type="submit" name="btnOK"/></br>
-        <a href="newAccount.php">You don't have an account ?</a>
       </fieldset>
     </form>
+    <a href="newAccount.php">You don't have an account ?</a>
   </body>
 </html>

@@ -2,18 +2,21 @@
 
 session_start();
 
-function checkUser($username, $pwd){
-  if ($username == "admin" && $pwd == "Super") {
-      $erreur = false;
-      $logged = true;
-      $_SESSION['username'] = $username;
-      header("Location: gestion.php");
-      exit;
-  } else {
-      $erreur = true;
-      $erreurmsg = "Identification ou mot de passe erroné";
-  }
+function checkUser($username, $pwd) {
+    $db = connectDb();
+    $sql = "SELECT login FROM users "
+          . "WHERE login = :login AND pwd = :pwd";
+    $request = $db->prepare($sql);
+    if ($request->execute(array(
+                'login' => $username,
+                'pwd' => $pwd))) {
+        $result = $request->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    } else {
+        return NULL;
+    }
 }
+
 
 function connectDb()
 {
@@ -23,7 +26,6 @@ function connectDb()
     $dbname = 'EE_revision';
 
     static $db = null;
-
     if ($db === null)
     {
         $pdo_options[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
@@ -31,4 +33,32 @@ function connectDb()
         $db->exec('SET CHARACTER SET utf8');
     }
     return $db;
+}
+
+//L'utilisateur se déconnecte
+function disconnect() {
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+    }
+    $_SESSION = array();
+    session_destroy();
+    header("Location: index.php");
+    exit;
+}
+
+function addUser($LastName, $FirstName, $Pseudo, $Pwd) {
+    $db = connectDb();
+    $sql = "INSERT INTO users(LastName,FirstName,Pseudo,Pwd) " .
+            " VALUES (:LastName, :FirstName, :Pseudo, :Pwd)";
+    $request = $db->prepare($sql);
+    if ($request->execute(array(
+                'LastName' => $LastName,
+                'FirstName' => $FirstName,
+                'Pseudo' => $Pseudo,
+                'Pwd' => sha1($Pwd)))) {
+        return $db->lastInsertID();
+    } else {
+        return NULL;
+    }
 }
