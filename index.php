@@ -14,7 +14,6 @@ $errormsg = "";
 $username = "";
 $pwd = "";
 $logged = false;
-$userCo = "";
 
 $username = filter_input(INPUT_POST, "id", FILTER_SANITIZE_STRING);
 $pwd = sha1(filter_input(INPUT_POST, "pwd", FILTER_SANITIZE_STRING));
@@ -26,13 +25,16 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
   if (!isset($_SESSION['username'])) {
     if (checkUser($username, $pwd) != NULL){
        $_SESSION['username'] = $username;
-       echo $_SESSION['username']; // ajouter la redirection
+       $error = false;
+       $errormsg = "";
+       $logged = true;
+       header("Location: confirmation.php");
+       exit;
     }
     else {
       $error = true;
       $errormsg = "Oppsie Whoopsie !! Mauvais mot de passe ou identifiant !";
       $logged = false;
-      $userCo = "";
     }
   }else {
     disconnect();
@@ -44,12 +46,15 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Connection</title>
   </head>
   <body>
     <form class="" action="index.php" method="post">
       <fieldset>
         <legend>Connection</legend>
+        <?php if ($error == true) {?>
+          <span style="color: red;"><?php echo $errormsg; ?></span><br>
+        <?php } ?>
         <label>Identifiant : </br><input type="text" name="id"/></label></br>
         <label>Mot de passe : </br><input type="password" name="pwd"/></label></br>
         <input type="submit" name="btnOK"/></br>

@@ -47,16 +47,16 @@ function disconnect() {
     exit;
 }
 
-function addUser($LastName, $FirstName, $Pseudo, $Pwd) {
+function addUser($surname, $name, $login, $pwd) {
     $db = connectDb();
-    $sql = "INSERT INTO users(LastName,FirstName,Pseudo,Pwd) " .
-            " VALUES (:LastName, :FirstName, :Pseudo, :Pwd)";
+    $sql = "INSERT INTO users(surname, name, login, pwd) " .
+            " VALUES (:surname, :name, :login, :pwd)";
     $request = $db->prepare($sql);
     if ($request->execute(array(
-                'LastName' => $LastName,
-                'FirstName' => $FirstName,
-                'Pseudo' => $Pseudo,
-                'Pwd' => sha1($Pwd)))) {
+                'surname' => $surname,
+                'name' => $name,
+                'login' => $login,
+                'pwd' => $pwd))) {
         return $db->lastInsertID();
     } else {
         return NULL;
