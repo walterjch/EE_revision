@@ -23,7 +23,7 @@ function connectDb()
     $server = '127.0.0.1';
     $pseudo = 'root';
     $pwd = 'root';
-    $dbname = 'EE_revision';
+    $dbname = 'EE_revision_forum';
 
     static $db = null;
     if ($db === null)
@@ -48,6 +48,7 @@ function disconnect() {
 }
 
 function addUser($surname, $name, $login, $pwd) {
+  if (!userExists($login)) {
     $db = connectDb();
     $sql = "INSERT INTO users(surname, name, login, pwd) " .
             " VALUES (:surname, :name, :login, :pwd)";
@@ -61,4 +62,43 @@ function addUser($surname, $name, $login, $pwd) {
     } else {
         return NULL;
     }
+  }else {
+    echo "Zoopie Doopsie !! Username already exists !";
+  }
+
+}
+
+
+function userExists($login){
+  try {
+    $db = connectDb();
+    $sql = "SELECT login FROM users "
+            . "WHERE login = :login";
+    $request = $db->prepare($sql);
+    if ($request->execute(array(
+                'login' => $login))) {
+        return true;
+    } else {
+        return false;
+    }
+  } catch (Exception $e) {
+      echo $e->getMessage();
+      return false;
+  }
+}
+
+
+function getUserByLogin($login){
+  $db = connectDb();
+  $sql = "SELECT idUser, surname, name FROM users " .
+          "WHERE login = :login";
+  $request = $db->prepare($sql);
+  if ($request->execute(array(
+              'login' => $login))) {
+      $result = $request->fetch();
+
+      return $result;
+  } else {
+      return false;
+  }
 }

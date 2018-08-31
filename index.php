@@ -24,11 +24,13 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 //Sinon, on lui propose de se connecter
   if (!isset($_SESSION['username'])) {
     if (checkUser($username, $pwd) != NULL){
+       $name = getUserByLogin($username, $pwd);
+       $_SESSION['entireName'] = $name;
        $_SESSION['username'] = $username;
        $error = false;
        $errormsg = "";
        $logged = true;
-       header("Location: confirmation.php");
+       header("Location: main.php");
        exit;
     }
     else {

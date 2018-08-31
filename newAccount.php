@@ -35,11 +35,11 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
         <?php if ($error == true) { ?>
           <span style="color: red;"><?php echo $errormsg ?></span><br>
         <?php } ?>
-        <label>Prénom : <br><input type="text" name="surname"/></label><br>
-        <label>Nom : <br><input type="text" name="name"/></label><br>
-        <label>Identifiant : <br><input type="text" name="login"/></label><br>
-        <label>Mot de passe : <br><input type="password" name="pwd"/></label><br>
-        <label>Validation du mot de passe : <br><input type="password" name="pwd2"/></label><br>
+        <label>Prénom : <br><input type="text" name="surname" required/></label><br>
+        <label>Nom : <br><input type="text" name="name" required/></label><br>
+        <label>Identifiant : <br><input type="text" name="login" required/></label><br>
+        <label>Mot de passe : <br><input type="password" name="pwd" required/></label><br>
+        <label>Validation du mot de passe : <br><input type="password" name="pwd2" required/></label><br>
         <input type="submit" name="btnOK"/><br>
       </fieldset>
     </form>
