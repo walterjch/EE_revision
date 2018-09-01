@@ -35,7 +35,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
     }
     else {
       $error = true;
-      $errormsg = "Oppsie Whoopsie !! Mauvais mot de passe ou identifiant !";
+      $errormsg = "Mauvais mot de passe ou identifiant !";
       $logged = false;
     }
   }else {

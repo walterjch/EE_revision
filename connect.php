@@ -63,28 +63,28 @@ function addUser($surname, $name, $login, $pwd) {
         return NULL;
     }
   }else {
-    echo "Zoopie Doopsie !! Username already exists !";
+    echo "Cet identifiant est déjà pris !";
   }
 
 }
 
 
 function userExists($login){
-  try {
     $db = connectDb();
     $sql = "SELECT login FROM users "
             . "WHERE login = :login";
     $request = $db->prepare($sql);
     if ($request->execute(array(
                 'login' => $login))) {
-        return true;
+        $result = $request->fetch(PDO::FETCH_ASSOC);
+        if (isset($result['login'])) {
+          return true;
+        }else {
+          return false;
+        }
     } else {
         return false;
     }
-  } catch (Exception $e) {
-      echo $e->getMessage();
-      return false;
-  }
 }
 
 
@@ -101,4 +101,55 @@ function getUserByLogin($login){
   } else {
       return false;
   }
+}
+
+function insertPost($title, $description, $idUser){
+  $db = connectDb();
+  $sql = "INSERT INTO news(title, description, idUser) " .
+          " VALUES (:title, :description, :idUser)";
+  $request = $db->prepare($sql);
+  if ($request->execute(array(
+              'title' => $title,
+              'description' => $description,
+              'idUser' => $idUser))) {
+      return $db->lastInsertID();
+  } else {
+      echo "<h3>Le post n'a pas pu être inséré !</h3>";
+  }
+}
+
+
+function getPosts($idUser){
+  $db = connectDb();
+  $sql = "SELECT idNews, title, description, idUser FROM news "
+          . "WHERE idUser = :idUser "
+          . "ORDER BY idNews desc";
+  $request = $db->prepare($sql);
+  if ($request->execute(array(
+              'idUser' => $idUser))) {
+      $result = $request->fetchAll(PDO::FETCH_ASSOC);
+      return $result;
+  } else {
+      return "Erreur : une erreur s'est produite lors du chargement de votre page.";
+  }
+}
+
+function postExists($title, $description, $idUser){
+    $db = connectDb();
+    $sql = "SELECT title, description, idUser FROM news "
+            . "WHERE title = :title AND description = :description AND idUser = :idUser";
+    $request = $db->prepare($sql);
+    if ($request->execute(array(
+                'title' => $title,
+                'description' => $description,
+                'idUser' => $idUser))) {
+        $result = $request->fetch(PDO::FETCH_ASSOC);
+        if (isset($result['login']) || isset($result['description']) || isset($result['idUser'])) {
+          return true;
+        }else {
+          return false;
+        }
+    } else {
+        return false;
+    }
 }

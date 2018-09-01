@@ -17,7 +17,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
     $errormsg = "";
   }else {
     $error = true;
-    $errormsg = "Whoopsi Dumbi !! Le formulaire n'as pas été correctement rempli !";
+    $errormsg = "Le formulaire n'as pas été correctement rempli !";
   }
 }
 
@@ -43,6 +43,6 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
         <input type="submit" name="btnOK"/><br>
       </fieldset>
     </form>
-    <a href="index.php">Back to connction page.</a>
+    <a href="index.php">Back to connection page.</a>
   </body>
 </html>
