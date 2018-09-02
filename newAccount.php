@@ -1,6 +1,6 @@
 <?php
 
-require_once("connect.php");
+require_once("functions.php");
 
 $error = false;
 $errormsg = "";
@@ -26,6 +26,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/style.css">
     <title>Inscription</title>
   </head>
   <body>
@@ -33,7 +34,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
       <fieldset>
         <legend>Inscription</legend>
         <?php if ($error == true) { ?>
-          <span style="color: red;"><?php echo $errormsg ?></span><br>
+          <span class="warning"><?php echo $errormsg ?></span><br>
         <?php } ?>
         <label>Prénom : <br><input type="text" name="surname" required/></label><br>
         <label>Nom : <br><input type="text" name="name" required/></label><br>
@@ -43,6 +44,6 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
         <input type="submit" name="btnOK"/><br>
       </fieldset>
     </form>
-    <a href="index.php">Back to connection page.</a>
+    <a href="index.php">Retour</a>
   </body>
 </html>

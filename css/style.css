@@ -1,0 +1,19 @@
+.post
+{
+    margin-top: 30px;
+    text-align: justify;
+    background-color: #D2D2D2;
+    padding: 10px;
+    box-shadow: 6px 6px 15px black;
+    border-radius: 5px;
+}
+
+.warning
+{
+    color: red;
+}
+
+.info
+{
+    color: green;
+}

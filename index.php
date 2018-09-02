@@ -4,10 +4,11 @@ Description : Projet de révision de la
               deuxième année.
 Auteur      : JAUCH Walter
 Date        : 30.08.2018
+Comment     : The website content is in french and all the code in english
 -->
 <?php
 
-require_once("connect.php");
+require_once("functions.php");
 
 $error = false;
 $errormsg = "";
@@ -48,12 +49,13 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>Connection</title>
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Connexion</title>
   </head>
   <body>
     <form class="" action="index.php" method="post">
       <fieldset>
-        <legend>Connection</legend>
+        <legend>Connexion</legend>
         <?php if ($error == true) {?>
           <span style="color: red;"><?php echo $errormsg; ?></span><br>
         <?php } ?>
@@ -62,6 +64,6 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
         <input type="submit" name="btnOK"/></br>
       </fieldset>
     </form>
-    <a href="newAccount.php">You don't have an account ?</a>
+    <a href="newAccount.php">Vous n'avez pas de compte ?</a>
   </body>
 </html>
