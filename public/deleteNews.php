@@ -29,7 +29,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../resources/style.css">
     <meta charset="utf-8">
     <title>Confirmation</title>
   </head>

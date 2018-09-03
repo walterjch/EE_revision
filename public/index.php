@@ -58,7 +58,7 @@ if (filter_has_var(INPUT_POST, "btnOK")) {
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="../resources/style.css">
     <title>Connexion</title>
   </head>
   <body>
