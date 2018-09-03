@@ -4,11 +4,20 @@ Description : Projet de révision de la
               deuxième année.
 Auteur      : JAUCH Walter
 Date        : 30.08.2018
-Comment     : The website content is in french and all the code in english
+Comments    : The website content is in french and all the code in english
+              If you are testing the website, you can use the login "professor"
+              password : professor1234
+              (Each user has as password its login with 1234 in the end)
 -->
 <?php
 
 require_once("functions.php");
+
+//Is there any user connected ?
+if (!empty($_SESSION["username"])) {
+  header("Location: main.php");
+  exit;
+}
 
 $error = false;
 $errormsg = "";

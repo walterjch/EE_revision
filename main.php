@@ -1,6 +1,12 @@
 <?php
 require_once("functions.php");
 
+//Is there any user connected ?
+if (empty($_SESSION["username"])) {
+  header("Location: index.php");
+  exit;
+}
+
 if (filter_has_var(INPUT_POST, "btnDisconnect")) {
     disconnect();
     header("Location: index.php");
